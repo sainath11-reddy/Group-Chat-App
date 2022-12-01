@@ -1,8 +1,8 @@
 const sequelize = require('sequelize');
-const { use } = require('../routes/users');
+// const { use } = require('../routes/users');
 const Sequelize = require('../util/database');
 
-const users = Sequelize.define('users',{
+const users = Sequelize.define('Users',{
     id:{
         type:sequelize.INTEGER,
         allowNull:false,

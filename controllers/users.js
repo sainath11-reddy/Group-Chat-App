@@ -19,6 +19,9 @@ exports.postUser = (req,res,next)=>{
                 console.log(err.name)
             });
         }
+        else{
+            console.log(err)
+        }
     })
     
 }

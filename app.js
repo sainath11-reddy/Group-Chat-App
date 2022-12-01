@@ -5,7 +5,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
 const Sequelize = require('./util/database');
-
+const cors =require('cors');
+app.use(cors({
+    origin:"*"  
+}))
 app.use(bodyParser.json());
 app.use('/users', userRoutes);
 
