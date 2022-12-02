@@ -4,6 +4,7 @@ exports.postMessage = (req, res, next) =>{
     const user = req.user;
     message.create({message:req.body.message,userName:req.user.name, UserId:req.user.id}).then(result =>{
         console.log(result);
+        res.json({'success':true});
     }).catch(err => console.log(err));
 }
 

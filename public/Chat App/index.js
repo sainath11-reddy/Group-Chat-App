@@ -1,19 +1,27 @@
+
+
 const body = document.querySelector('body');
 const form = document.querySelector('form');
+const textBox = document.querySelector('form input');
 const ul = document.getElementById('message_list');
 form.addEventListener('submit', (e)=>{
-    
-    axios.post('http://localhost:3000/message',{
+    e.preventDefault();
+    axios.post('http://localhost:3000/message',
+    {
         message:form.message.value
-    },{headers:{"Authorization":localStorage.getItem("token")}}).then(succ =>{
-        console.log('done');
-        e.preventDefault();
-    })
+    },{
+        headers:{"Authorization":localStorage.getItem("token")}
+    }).then(response =>{
+        console.log(response);
+        textBox.value='';
+        
+    }).catch(err => console.log(err))
 })
 
 document.addEventListener('DOMContentLoaded',(e)=>{
     e.preventDefault();
-    axios.get('http://localhost:3000/message', {
+    setInterval(()=>{
+        axios.get('http://localhost:3000/message', {
         headers:{"Authorization":localStorage.getItem("token")}})
         .then(succ =>{
             let list='';
@@ -23,4 +31,6 @@ document.addEventListener('DOMContentLoaded',(e)=>{
             ul.innerHTML = list;
         })
         .catch(err => console.log(err))
+    },1000)
+    
 })

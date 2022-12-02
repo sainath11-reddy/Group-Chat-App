@@ -2,8 +2,8 @@ body{
     text-align: center;
 }
 .form-class{
-    position: absolute;
+    position: fixed;
     bottom:0;
     left:40%;
-    
+
 }
