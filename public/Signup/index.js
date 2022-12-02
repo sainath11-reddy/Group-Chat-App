@@ -8,8 +8,9 @@ form.addEventListener('submit',(e)=>{
         "password":form.password.value,
         "phoneNumber":form.number.value
     }).then(response =>{
-        if(response.success === 'true'){
+        if(response.status === 200){
             alert("Signup Successful");
+            window.location.href = '../Login/login.html'
         }
         console.log(response);
         

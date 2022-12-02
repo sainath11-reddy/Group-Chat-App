@@ -8,8 +8,10 @@ form.addEventListener('submit',(e)=>{
     }).then(response => {
         if(response.status === 200){
             p.innerHTML='';
-            localStorage.setItem('token',response.token);
+            
+            localStorage.setItem('token',response.data.token);
             alert("You have logged in successfully");
+            window.location.href = '../Chat App/index.html'
         }
     }).catch(err =>{
         console.log(err.response);
