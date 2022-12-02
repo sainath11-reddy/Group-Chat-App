@@ -12,7 +12,7 @@ form.addEventListener('submit',(e)=>{
             alert("Signup Successful");
             window.location.href = '../Login/login.html'
         }
-        console.log(response);
+        
         
     }).catch(err => {
         if(err.response.status === 409){

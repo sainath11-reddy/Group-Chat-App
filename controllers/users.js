@@ -11,7 +11,7 @@ exports.postSignup = (req,res,next)=>{
                 password:hash
             }).then(result =>{
                     console.log('User entry added successfully');
-                        res.send('Done')
+                        res.json('Done')
             }).catch(err => {
                 if(err.name === 'SequelizeUniqueConstraintError'){
                     res.status(409).json({"success":"false"});
