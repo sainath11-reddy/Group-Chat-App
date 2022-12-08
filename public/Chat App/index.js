@@ -1,4 +1,4 @@
-
+// const { CostExplorer } = require("aws-sdk");
 
 const body = document.querySelector('body');
 const form = document.querySelector('form');
@@ -20,17 +20,50 @@ form.addEventListener('submit', (e)=>{
 
 document.addEventListener('DOMContentLoaded',(e)=>{
     e.preventDefault();
-    setInterval(()=>{
-        axios.get('http://localhost:3000/message', {
+    let lastPageId;
+    let mergemsgs=[];
+    // setInterval(()=>{
+        let oldMessages = JSON.parse(localStorage.getItem('oldMessages'));
+        if(oldMessages == null){
+            lastPageId = 0;
+        }
+        else{
+            console.log(oldMessages)
+            lastPageId = oldMessages[oldMessages.length - 1].messageId;
+        }
+        axios.get(`http://localhost:3000/message?lastPageId=${lastPageId}`, {
         headers:{"Authorization":localStorage.getItem("token")}})
-        .then(succ =>{
+        .then(newMessages =>{
+            
+            console.log(lastPageId);
+            if(newMessages.data.length>0){
+                if(oldMessages){
+                    // console.log(oldMessages, JSON.stringify(newMessages.data))
+                    mergemsgs = oldMessages.concat(newMessages.data);
+                    
+            }
+            else{
+                mergemsgs = newMessages.data;
+            }
+            if (mergemsgs.length > 10) {
+                let remove = mergemsgs.length - 10;
+                for (let i = 0; i < remove; i++) {
+                  mergemsgs.shift();
+                }
+              }
+        }
+        else{
+            mergemsgs=JSON.parse(localStorage.getItem("oldMessages"));
+        }
+            
+            localStorage.setItem('oldMessages',JSON.stringify(mergemsgs));
             let list='';
-            for(let i of succ.data){
+            for(let i of Object.values(mergemsgs)){
                 list += `<li>${i.userName}: ${i.message} </li>`
             }
-            ul.innerHTML = list;
+            ul.innerHTML += list;
         })
         .catch(err => console.log(err))
-    },1000)
+    // },1000)
     
 })

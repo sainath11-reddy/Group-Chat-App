@@ -1,4 +1,5 @@
 const message = require('../models/message');
+const { Op } = require("sequelize");
 
 exports.postMessage = (req, res, next) =>{
     const user = req.user;
@@ -9,7 +10,13 @@ exports.postMessage = (req, res, next) =>{
 }
 
 exports.getMessages = (req, res, next)=>{
-    message.findAll().then(result =>{
+    const lastPageId = req.query.lastPageId;
+    if(!lastPageId){
+        lastPageId = -1;
+    }
+    message.findAll(
+        {where:{ 
+            messageId:{[Op.gt]:lastPageId}}}).then(result =>{
         // const name = result['']
         console.log(result);
         res.json(result);
